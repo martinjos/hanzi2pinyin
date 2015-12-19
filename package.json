@@ -1,9 +1,9 @@
 {
-  "title": "Katakana 2 Romaji / カタカナからローマ字",
-  "name": "katakana2romaji",
-  "version": "1.2.1",
-  "icon": "resource://katakana2romaji/icons/icon-48.png",
-  "description": "Converts Japanese katakana into rōmaji. / カタカナからローマ字へ変換します。",
+  "title": "Hanzi 2 Pinyin",
+  "name": "hanzi2pinyin",
+  "version": "1.0.0",
+  "icon": "resource://hanzi2pinyin/icons/icon-48.png",
+  "description": "Converts Chinese characters (Hanzi) to Pinyin.",
   "main": "index.js",
   "author": "Martin Sidaway",
   "engines": {

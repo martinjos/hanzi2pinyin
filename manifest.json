@@ -3,7 +3,7 @@
 
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
-  "version": "1.2.1",
+  "version": "1.0.0",
 
   "default_locale": "en",
 
@@ -16,15 +16,15 @@
     {
       "matches": ["<all_urls>"],
       "js": [
-        "data/k2r-converter.js",
+        "data/h2p-converter.js",
         "data/filter.js",
-        "data/filter-katakana.js",
+        "data/filter-regexp.js",
         "data/modify-page.js"
       ]
     }
   ],
 
   "web_accessible_resources": [
-    "data/Katakana.txt"
+    "data/pinyin.json"
   ]
 }

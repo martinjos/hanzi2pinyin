@@ -1,4 +1,4 @@
-NAME=katakana2romaji
+NAME=hanzi2pinyin
 
 BUILD_CHROME=build_chrome/$(NAME)
 BUILD_FIREFOX=build_firefox

@@ -1,7 +1,7 @@
-#Katakana 2 Romaji
+#Hanzi 2 Pinyin
 
-Browser extension for Google Chrome and Firefox, which converts Japanese
-katakana into rōmaji.
+Browser extension for Google Chrome and Firefox, which converts Chinese
+characters (Hanzi) into Pinyin.
 
 #License
 
