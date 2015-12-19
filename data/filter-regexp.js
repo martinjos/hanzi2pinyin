@@ -1,7 +1,4 @@
-var kata = '\u30A1-\u30F5\u30F7-\u30FB\u31F0-\u31FF\uFF65-\uFF9D';
-var regexp = new RegExp('['+kata+']['+kata+'\u30FC\u309A]*', 'g');
-
-function convertKatakanaFilter(converter) {
+function regexpConvertFilter(regexp, converter) {
     return function (doc, child) {
         var text = child.data;
 
@@ -39,4 +36,4 @@ function convertKatakanaFilter(converter) {
 }
 
 if (typeof(exports) != 'undefined')
-    exports.convertKatakanaFilter = convertKatakanaFilter;
+    exports.regexpConvertFilter = regexpConvertFilter;
