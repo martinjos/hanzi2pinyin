@@ -15,19 +15,17 @@ H2PConverter.prototype.splicePinyin = function(first) {
         }
         if (pinyinWord !== null) {
             this.current = this.current.substr(j);
-            if (!this.first)
-                this.r += " ";
-            this.r += pinyinWord;
+            this.words.push(word);
+            this.pinyinWords.push(pinyinWord);
             break;
         }
     }
-    this.first = false;
 };
 
 H2PConverter.prototype.convert = function(k) {
-    this.r = "";
+    this.words = [];
+    this.pinyinWords = [];
     this.current = "";
-    this.first = true;
     for (var i = 0; i < k.length; i++) {
         var ch = k.charAt(i);
         this.current += ch;
@@ -38,13 +36,14 @@ H2PConverter.prototype.convert = function(k) {
     while (this.current.length > 0) {
         this.splicePinyin();
     }
-    var r = this.r;
+    var result = { words: this.words, pinyinWords: this.pinyinWords };
 
     // clean up
-    this.r = null;
+    this.words = null;
+    this.pinyinWords = null;
     this.current = null;
 
-    return r;
+    return result;
 };
 
 if (typeof(exports) != 'undefined')

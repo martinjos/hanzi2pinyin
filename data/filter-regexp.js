@@ -18,10 +18,14 @@ function regexpConvertFilter(regexp, converter) {
             r = converter.convert(k);
 
             result.push(document.createTextNode(' '));
-            span = document.createElement('span');
-            span.setAttribute('title', k);
-            span.appendChild(document.createTextNode(r));
-            result.push(span);
+            for (var i = 0; i < r.words.length; i++) {
+                if (i > 0)
+                    result.push(document.createTextNode(' '));
+                var span = document.createElement('span');
+                span.setAttribute('title', r.words[i]);
+                span.appendChild(document.createTextNode(r.pinyinWords[i]));
+                result.push(span);
+            }
             result.push(document.createTextNode(' '));
         }
 
