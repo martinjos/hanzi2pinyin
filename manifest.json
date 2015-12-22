@@ -16,6 +16,7 @@
     {
       "matches": ["<all_urls>"],
       "js": [
+        "data/xregexp-all.js",
         "data/h2p-converter.js",
         "data/filter.js",
         "data/filter-regexp.js",
