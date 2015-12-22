@@ -69,7 +69,30 @@ function nextTextNode(node, direction) {
     return { node: state.node, topNode: topNode, topDepth: topDepth };
 }
 
-function findNextChar(node, direction) {
+function reverseString(str) {
+    var chars = [];
+    for (var i = str.length; i >= 0; i--) {
+        chars.push(str[i]);
+    }
+    return chars.join('');
+}
+
+function findMatchChar(text, direction, regexp) {
+    if (direction === 0) {
+        text = reverseString(text);
+    }
+    var m = text.match(regexp);
+    var ch = null;
+    if (m !== null) {
+        ch = m[0];
+    }
+    return ch;
+}
+
+function findNextChar(node, direction, regexp) {
+    if (regexp === undefined || regexp === null) {
+        regexp = /[\S\s]/;
+    }
     var topNode = node;
     var topDepth = nodeDepth(topNode);
     var info = nextTextNode(node, direction);
@@ -78,7 +101,12 @@ function findNextChar(node, direction) {
         topNode = info.topNode;
         topDepth = info.topDepth;
     }
-    while (node && node.data.length == 0) {
+    var ch = null;
+    while (node) {
+        ch = findMatchChar(node.data, direction, regexp);
+        if (ch !== null)
+            break;
+
         var lastNode = node;
         info = nextTextNode(node, direction);
         node = info.node;
@@ -87,9 +115,7 @@ function findNextChar(node, direction) {
             topDepth = info.topDepth;
         }
     }
-    var idx = 0;
-    if (node) idx = direction == 0 ? node.length - 1 : 0;
-    return { ch: node && node.data[idx], topNode: topNode };
+    return { ch: ch, topNode: topNode };
 }
 
 function isRightSpacing(ch) {
@@ -122,6 +148,9 @@ function isLeftSpacing(ch) {
     return leftSpacing;
 }
 
+var CapChars = '.!?‹«';
+var CapRegexp = new XRegExp('['+CapChars+'\\p{Letter}\\p{Number}]');
+
 function regexpConvertFilter(regexp, converter) {
     return function (doc, child) {
         var text = child.data;
@@ -134,6 +163,10 @@ function regexpConvertFilter(regexp, converter) {
         var info = findNextChar(child, 0);
         var lastRightSpacing = isRightSpacing(info.ch);
         var lastInsPos = info.topNode;
+
+        var info = findNextChar(child, 0, CapRegexp);
+        var lastCap = info.ch === null ||
+                      CapChars.indexOf(info.ch) != -1;
 
         function insertSpaceBefore() {
             if (lastInsPos !== null) {
@@ -156,6 +189,9 @@ function regexpConvertFilter(regexp, converter) {
                 result.push(document.createTextNode(intermediate));
                 lastRightSpacing =
                     isRightSpacing(intermediate[intermediate.length - 1]);
+                var lastCapChar = findMatchChar(intermediate, 0, CapRegexp);
+                if (lastCapChar !== null)
+                    lastCap = (CapChars.indexOf(lastCapChar) != -1)
                 lastInsPos = null;
             }
             pos = regexp.lastIndex;
@@ -171,15 +207,21 @@ function regexpConvertFilter(regexp, converter) {
                     }
                     result.push(document.createTextNode(punct));
                     lastRightSpacing = isRightSpacing(punct);
+                    if (CapChars.indexOf(punct) != -1)
+                        lastCap = true;
                 } else {
                     if (lastRightSpacing) {
                         insertSpaceBefore();
                     }
                     var span = document.createElement('span');
                     span.setAttribute('title', r.words[i]);
-                    span.appendChild(document.createTextNode(r.pinyinWords[i]));
+                    var word = r.pinyinWords[i];
+                    if (lastCap)
+                        word = word[0].toUpperCase() + word.substr(1);
+                    span.appendChild(document.createTextNode(word));
                     result.push(span);
                     lastRightSpacing = true;
+                    lastCap = false;
                 }
                 lastInsPos = null;
             }
