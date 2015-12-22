@@ -94,7 +94,7 @@ function findNextChar(node, direction) {
 
 function isRightSpacing(ch) {
     var rightSpacing = true;
-    if (!ch) {
+    if (null === ch || undefined === ch) {
         rightSpacing = false;
     } else if (null === ch.match(new XRegExp('[\\p{Letter}\\p{Number}]'))) {
         if (typeof(PunctuationType[ch]) != 'undefined') {
@@ -109,7 +109,7 @@ function isRightSpacing(ch) {
 
 function isLeftSpacing(ch) {
     var leftSpacing = true;
-    if (!ch) {
+    if (null === ch || undefined === ch) {
         leftSpacing = false;
     } else if (null === ch.match(new XRegExp('[\\p{Letter}\\p{Number}]'))) {
         if (typeof(PunctuationType[ch]) != 'undefined') {
@@ -131,34 +131,37 @@ function regexpConvertFilter(regexp, converter) {
         var found = false;
         var matches;
 
+        var info = findNextChar(child, 0);
+        var lastRightSpacing = isRightSpacing(info.ch);
+        var lastInsPos = info.topNode;
+
+        function insertSpaceBefore() {
+            if (lastInsPos !== null) {
+                lastInsPos.parentElement.insertBefore(
+                    doc.createTextNode(' '),
+                    lastInsPos
+                );
+            } else {
+                result.push(document.createTextNode(' '));
+            }
+        }
+
         while ((matches = regexp.exec(text)) !== null) {
+
             var intermediate = text.substr(pos, matches.index - pos);
             if (intermediate.length > 0) {
+                if (isLeftSpacing(intermediate[0]) && lastRightSpacing) {
+                    insertSpaceBefore();
+                }
                 result.push(document.createTextNode(intermediate));
+                lastRightSpacing =
+                    isRightSpacing(intermediate[intermediate.length - 1]);
+                lastInsPos = null;
             }
             pos = regexp.lastIndex;
             k = matches[0];
 
             r = converter.convert(k);
-
-            var lastRightSpacing = true;
-            var lastInsPos = null;
-            if (matches.index == 0) {
-                var info = findNextChar(child, 0);
-                lastRightSpacing = isRightSpacing(info.ch);
-                lastInsPos = info.topNode;
-            }
-
-            function insertSpaceBefore() {
-                if (lastInsPos !== null) {
-                    lastInsPos.parentElement.insertBefore(
-                        doc.createTextNode(' 1 '),
-                        lastInsPos
-                    );
-                } else {
-                    result.push(document.createTextNode(' 2 '));
-                }
-            }
 
             for (var i = 0; i < r.words.length; i++) {
                 if (r.words[i] == '') {
@@ -180,6 +183,10 @@ function regexpConvertFilter(regexp, converter) {
                 }
                 lastInsPos = null;
             }
+        }
+
+        if (pos < text.length && isLeftSpacing(text[pos]) && lastRightSpacing) {
+            insertSpaceBefore();
         }
 
         if (pos == 0) {
