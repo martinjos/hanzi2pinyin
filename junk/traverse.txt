@@ -1,0 +1,126 @@
+flow > phrasing
+
+flow
+
+a		go	clickable link or anchor (target)
+abbr		go	abbreviation
+b		go	bold
+br		go	line break
+del		go	deleted text
+dfn		go	term to define
+em		go	emphasis
+i		go	italics
+ins		go	inserted text
+mark		go	marked (highlighted) text
+q		go	quoted text
+rp		skip	ruby parenthesis (alt text)
+rt		skip	ruby text
+ruby		skip	ruby container
+s		go	struck text
+small		go	small text
+span		go	arbitrary text span
+strong		go	strong text
+sub		go	subscript
+sup		go	superscript
+time		go	date or time
+u		go	underline
+var		go	variable or placeholder
+wbr		go	optional line break
+
+address		stop
+area		stop
+article		stop
+aside		stop
+audio		stop
+base		stop
+bdi		stop
+bdo		stop
+blockquote	stop
+body		stop
+button		stop
+canvas		stop
+caption		stop
+cite		stop
+code		stop
+col		stop
+colgroup	stop
+command		stop
+datalist	stop
+dd		stop
+details		stop
+div		stop
+dl		stop
+dt		stop
+embed		stop
+fieldset	stop
+figcaption	stop
+figure		stop
+footer		stop
+form		stop
+h1		stop
+h2		stop
+h3		stop
+h4		stop
+h5		stop
+h6		stop
+header		stop
+hgroup		stop
+hr		stop
+iframe		stop
+img		stop
+input		stop
+kbd		stop
+keygen		stop
+label		stop
+legend		stop
+li		stop
+link		stop
+map		stop
+math		stop ?
+menu		stop
+meter		stop
+nav		stop
+noscript	stop
+object		stop
+ol		stop
+optgroup	stop
+option		stop
+output		stop
+p		stop
+param		stop
+pre		stop
+progress	stop
+samp		stop
+script		stop
+section		stop
+select		stop
+source		stop
+style		stop
+summary		stop
+svg		stop
+table		stop
+tbody		stop
+td		stop
+textarea	stop
+tfoot		stop
+th		stop
+thead		stop
+tr		stop
+track		stop
+ul		stop
+video		stop
+
+phrasing
+
+a (if it contains only phrasing content)
+abbr
+area (if it is a descendant of a map element)
+audio
+b
+bdi
+bdo
+br
+button
+canvas
+cite code command datalist del (if it contains only phrasing content) dfn em embed i iframe img input ins (if it contains only phrasing content) kbd keygen label map (if it contains only phrasing content) mark math meter noscript object output progress q ruby s samp script select small span strong sub sup svg textarea time u var video wbr Text 
+
