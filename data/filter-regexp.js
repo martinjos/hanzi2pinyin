@@ -96,11 +96,11 @@ function isRightSpacing(ch) {
     var rightSpacing = true;
     if (!ch) {
         rightSpacing = false;
-    } else if (!ch.match(new XRegExp('[ \\p{Letter} \\p{Number} ]', 'x'))) {
+    } else if (null === ch.match(new XRegExp('[\\p{Letter}\\p{Number}]'))) {
         if (typeof(PunctuationType[ch]) != 'undefined') {
             if ((PunctuationType[ch] & RIGHT_SPACING) == 0)
                 rightSpacing = false;
-        } else if (ch.match(new XRegExp('[ \\p{Initial_Punctuation} \\p{Open_Punctuation} \\p{Dash_Punctuation} \\p{White_Space} ]', 'x'))) {
+        } else if (null !== ch.match(new XRegExp('[\\p{Initial_Punctuation}\\p{Open_Punctuation}\\p{Dash_Punctuation}\\p{White_Space}]'))) {
             rightSpacing = false;
         }
     }
@@ -111,11 +111,11 @@ function isLeftSpacing(ch) {
     var leftSpacing = true;
     if (!ch) {
         leftSpacing = false;
-    } else if (!ch.match(new XRegExp('[ \\p{Letter} \\p{Number} ]', 'x'))) {
+    } else if (null === ch.match(new XRegExp('[\\p{Letter}\\p{Number}]'))) {
         if (typeof(PunctuationType[ch]) != 'undefined') {
             if ((PunctuationType[ch] & LEFT_SPACING) == 0)
                 leftSpacing = false;
-        } else if (ch.match(new XRegExp('[ \\p{Final_Punctuation} \\p{Close_Punctuation} \\p{Dash_Punctuation} \\p{White_Space} ]', 'x'))) {
+        } else if (null !== ch.match(new XRegExp('[\\p{Final_Punctuation}\\p{Close_Punctuation}\\p{Dash_Punctuation}\\p{White_Space}]'))) {
             leftSpacing = false;
         }
     }
@@ -184,11 +184,10 @@ function regexpConvertFilter(regexp, converter) {
 
         if (pos == 0) {
             result.push(child);
-        } else {
-            if (pos < text.length) {
-                result.push(document.createTextNode(text.substr(pos)));
-            }
+        } else if (pos < text.length) {
+            result.push(document.createTextNode(text.substr(pos)));
         }
+
 
         return result;
     };
