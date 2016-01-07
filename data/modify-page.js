@@ -12,7 +12,7 @@ var CC_anglequote_left = '\u00AB\u2039';
 var CC_all_punct = CC_comma + CC_fullstop + CC_middledot + CC_colon +
                    CC_semicolon;
 
-var hanziRegexp = new XRegExp('\\p{Han}[\\p{Han}\\p{Initial_Punctuation}\\p{Final_Punctuation}\\p{Open_Punctuation}\\p{Close_Punctuation}\\p{Space_Separator}'+CC_all_punct+CC_fullwidth+']*', 'g');
+var hanziRegexp = new XRegExp(' \\p{Han} ( \\p{Han} | \\p{Initial_Punctuation} | \\p{Final_Punctuation} | \\p{Open_Punctuation} | \\p{Close_Punctuation} | \\p{Space_Separator} | [' + CC_all_punct + CC_fullwidth + '] )* ', 'gx');
 
 pinyinReceived = function(pinyinStr) {
 
