@@ -1,4 +1,4 @@
-var hanziRange = '\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF';
+var hanziRange = '\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\u3000-\u3002\u3008-\u3011\u3014-\u301F\uFE30\uFF01-\uFF5E\u00B7';
 var hanziRegexp = new RegExp('['+hanziRange+']+', 'g');
 
 pinyinReceived = function(pinyinStr) {

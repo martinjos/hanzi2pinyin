@@ -8,9 +8,10 @@ function filterTextNodes(elem, filter, doc, excludeTags) {
         excludeTags = defaultExcludeTags;
     var child = elem.firstChild;
     var found = false;
+    var first = true;
     while (child) {
         if (child.nodeType == 3) { // text
-            var array = filter(doc, child);
+            var array = filter(doc, child, first, child.nextSibling == null);
             if (array.length != 1 || array[0] != child) {
                 found = true;
                 var nextChild = child.nextSibling;
@@ -25,6 +26,7 @@ function filterTextNodes(elem, filter, doc, excludeTags) {
                 found = found | filterTextNodes(child, filter, doc);
         }
         child = child.nextSibling;
+        first = false;
     }
     return found;
 }
